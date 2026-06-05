@@ -162,8 +162,7 @@ python -m ccl_poetry_eval.evaluate `
 本地没有 NVIDIA 显卡时，把项目上传到 24GB 显存左右的 Ubuntu GPU 服务器，然后运行：
 
 ```bash
-bash scripts/setup_cloud_ubuntu.sh
-source .venv/bin/activate
+bash scripts/setup_autodl.sh
 bash scripts/run_hf_qwen25_7b.sh
 ```
 

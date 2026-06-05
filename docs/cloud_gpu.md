@@ -35,20 +35,19 @@ On Ubuntu GPU server:
 
 ```bash
 cd ccl2026-poetry-eval
-bash scripts/setup_cloud_ubuntu.sh
-source .venv/bin/activate
+bash scripts/setup_autodl.sh
 ```
 
-If the server already has a working PyTorch CUDA environment, you can skip the setup script and run:
+If you prefer an isolated virtual environment, use:
 
 ```bash
-python -m pip install -e ".[hf,metrics]"
+bash scripts/setup_cloud_ubuntu.sh
+source .venv/bin/activate
 ```
 
 ## Run Qwen2.5-7B-Instruct
 
 ```bash
-source .venv/bin/activate
 bash scripts/run_hf_qwen25_7b.sh
 ```
 
