@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ccl2026-poetry-eval"
+version = "0.1.0"
+description = "Baseline pipeline for CCL2026 Chinese poetry appreciation evaluation."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "tqdm>=4.66.0"
+]
+
+[project.optional-dependencies]
+hf = [
+  "accelerate>=0.30.0",
+  "protobuf>=4.25.0",
+  "sentencepiece>=0.2.0",
+  "torch>=2.1.0",
+  "transformers>=4.45.0"
+]
+metrics = [
+  "bert-score>=0.3.13",
+  "sacrebleu>=2.4.0"
+]
+
+[project.scripts]
+ccl-poetry-infer = "ccl_poetry_eval.infer:main"
+ccl-poetry-postprocess = "ccl_poetry_eval.postprocess:main"
+ccl-poetry-submit = "ccl_poetry_eval.submit:main"
+ccl-poetry-evaluate = "ccl_poetry_eval.evaluate:main"
+ccl-poetry-validate = "ccl_poetry_eval.validate_submission:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

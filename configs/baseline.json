@@ -1,0 +1,17 @@
+{
+  "model": {
+    "backend": "hf",
+    "name": "Qwen/Qwen2.5-7B-Instruct",
+    "temperature": 0.0,
+    "max_new_tokens": 512
+  },
+  "paths": {
+    "train_dir": "CCPA2026-train_data",
+    "test_dir": "CCPA2026-test_data",
+    "submission_template": "提交示例.json",
+    "prompt_dir": "prompts",
+    "raw_output_dir": "outputs/raw",
+    "submission_dir": "outputs/submissions"
+  },
+  "tasks": ["task1", "task2", "task3", "task4"]
+}
