@@ -167,3 +167,10 @@ bash scripts/run_hf_qwen25_7b.sh
 ```
 
 云端说明见 `docs/cloud_gpu.md`。当前默认模型是 `Qwen/Qwen2.5-7B-Instruct`。
+
+如果 Hugging Face 镜像下载太慢，可以先用 ModelScope 下载：
+
+```bash
+bash scripts/download_qwen25_7b_modelscope.sh
+MODEL=/root/autodl-tmp/models/Qwen2.5-7B-Instruct bash scripts/run_hf_qwen25_7b.sh
+```

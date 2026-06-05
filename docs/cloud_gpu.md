@@ -47,6 +47,15 @@ source .venv/bin/activate
 
 ## Run Qwen2.5-7B-Instruct
 
+If Hugging Face or `hf-mirror.com` is slow, download from ModelScope first:
+
+```bash
+bash scripts/download_qwen25_7b_modelscope.sh
+MODEL=/root/autodl-tmp/models/Qwen2.5-7B-Instruct bash scripts/run_hf_qwen25_7b.sh
+```
+
+Otherwise run directly:
+
 ```bash
 bash scripts/run_hf_qwen25_7b.sh
 ```
