@@ -31,6 +31,7 @@ ccl-poetry-postprocess = "ccl_poetry_eval.postprocess:main"
 ccl-poetry-submit = "ccl_poetry_eval.submit:main"
 ccl-poetry-evaluate = "ccl_poetry_eval.evaluate:main"
 ccl-poetry-validate = "ccl_poetry_eval.validate_submission:main"
+ccl-poetry-merge-task3 = "ccl_poetry_eval.merge_task3:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
