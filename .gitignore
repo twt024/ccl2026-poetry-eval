@@ -12,6 +12,7 @@ cache/
 CCPA2026-test_data/
 CCPA2026-train_data/
 CCPA2026-*.zip
+*.zip
 /*.json
 
 data/raw/*

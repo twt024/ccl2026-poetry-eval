@@ -77,7 +77,12 @@ def postprocess_record(
     if task == "task4":
         answer = normalize_choice(answer, raw_record.get("raw_output", ""))
     elif task == "task3":
-        answer = normalize_fill_answer(answer, expected_count=expected_fill_count(source))
+        if answer == "":
+            answer = raw_record.get("raw_output", "")
+        answer = normalize_fill_answer(
+            answer,
+            expected_count=expected_answer_count(source, template_record),
+        )
     else:
         answer = normalize_text(answer)
     result["answer"] = answer
@@ -158,20 +163,37 @@ def normalize_answer_map(value: Any, expected_keys: Any) -> dict[str, str]:
 
 
 def normalize_fill_answer(value: Any, expected_count: int = 1) -> list[str]:
-    if isinstance(value, list):
-        return [normalize_text(item) for item in value]
-    text = normalize_text(value)
-    if not text:
-        return []
-    if expected_count > 1:
-        parts = [
-            part.strip()
-            for part in re.split(r"[\uff0c,\uff1b;\n\u3001|]+", text)
-            if part.strip()
-        ]
-        if len(parts) >= expected_count:
-            return parts[:expected_count]
-    return [text]
+    raw_items = value if isinstance(value, list) else [value]
+    items = [strip_answer_noise(normalize_text(item)) for item in raw_items]
+    items = [item for item in items if item]
+
+    parts: list[str] = []
+    for item in items:
+        if len(items) < expected_count:
+            split_items = [
+                strip_answer_noise(part)
+                for part in re.split(r"[\uff0c,\uff1b;\n\u3001|]+", item)
+                if strip_answer_noise(part)
+            ]
+            parts.extend(split_items if len(split_items) > 1 else [item])
+        else:
+            parts.append(item)
+
+    if not parts:
+        parts = []
+    return parts[:expected_count] + [""] * max(0, expected_count - len(parts))
+
+
+def strip_answer_noise(text: str) -> str:
+    text = re.sub(r"^answer\s*[:：]\s*", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"^[\[\]\"'“”‘’\s]+|[\[\]\"'“”‘’\s]+$", "", text)
+    return text.strip()
+
+
+def expected_answer_count(source: dict[str, Any], template_record: dict[str, Any] | None) -> int:
+    if isinstance(template_record, dict) and isinstance(template_record.get("answer"), list):
+        return max(1, len(template_record["answer"]))
+    return expected_fill_count(source)
 
 
 def expected_fill_count(source: dict[str, Any]) -> int:
