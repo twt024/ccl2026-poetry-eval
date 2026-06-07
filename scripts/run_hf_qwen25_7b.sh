@@ -7,6 +7,9 @@ MODEL="${MODEL:-Qwen/Qwen2.5-7B-Instruct}"
 RUN_NAME="${RUN_NAME:-qwen2.5-7b-instruct}"
 MAX_NEW_TOKENS="${MAX_NEW_TOKENS:-768}"
 
+source scripts/submission_name.sh
+SUBMISSION_FILE="${SUBMISSION_FILE:-$(submission_output_path "${RUN_NAME}")}"
+
 for TASK in task1 task2 task3 task4; do
   python -m ccl_poetry_eval.infer \
     --task "${TASK}" \
@@ -31,8 +34,8 @@ python -m ccl_poetry_eval.submit \
   --task2 "outputs/submissions/task2_${RUN_NAME}.json" \
   --task3 "outputs/submissions/task3_${RUN_NAME}.json" \
   --task4 "outputs/submissions/task4_${RUN_NAME}.json" \
-  --output "outputs/submissions/submission_${RUN_NAME}.json"
+  --output "${SUBMISSION_FILE}"
 
 python -m ccl_poetry_eval.validate_submission \
-  --submission "outputs/submissions/submission_${RUN_NAME}.json" \
+  --submission "${SUBMISSION_FILE}" \
   --template auto

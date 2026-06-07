@@ -5,6 +5,8 @@ export PYTHONPATH="${PYTHONPATH:-}:src"
 
 BASE_RUN_NAME="${BASE_RUN_NAME:-qwen2.5-7b-instruct}"
 MERGE_RUN_NAME="${MERGE_RUN_NAME:-task3-merged}"
+source scripts/submission_name.sh
+SUBMISSION_FILE="${SUBMISSION_FILE:-$(submission_output_path "${BASE_RUN_NAME}")}"
 
 if [[ -z "${TASK3_FILES:-}" ]]; then
   echo "Set TASK3_FILES to a space-separated list of task3 JSON files." >&2
@@ -25,8 +27,8 @@ python -m ccl_poetry_eval.submit \
   --task2 "${TASK2_FILE:-outputs/submissions/task2_${BASE_RUN_NAME}.json}" \
   --task3 "outputs/submissions/task3_${MERGE_RUN_NAME}.json" \
   --task4 "${TASK4_FILE:-outputs/submissions/task4_${BASE_RUN_NAME}.json}" \
-  --output "outputs/submissions/submission_${BASE_RUN_NAME}_${MERGE_RUN_NAME}.json"
+  --output "${SUBMISSION_FILE}"
 
 python -m ccl_poetry_eval.validate_submission \
-  --submission "outputs/submissions/submission_${BASE_RUN_NAME}_${MERGE_RUN_NAME}.json" \
+  --submission "${SUBMISSION_FILE}" \
   --template auto

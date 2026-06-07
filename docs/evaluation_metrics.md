@@ -138,7 +138,6 @@ Useful validation command:
 
 ```bash
 python -m ccl_poetry_eval.validate_submission \
-  --submission outputs/submissions/submission_qwen2.5-7b-instruct.json \
+  --submission outputs/submissions/submission_qwen2.5-7b-instruct（4）.json \
   --template auto
 ```
-

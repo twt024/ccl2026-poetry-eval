@@ -63,17 +63,17 @@ bash scripts/run_hf_qwen25_7b.sh
 Final output:
 
 ```text
-outputs/submissions/submission_qwen2.5-7b-instruct.json
+outputs/submissions/submission_qwen2.5-7b-instruct（4）.json
 ```
 
-The script uses `--resume`, so interrupted runs can continue from the existing JSONL files.
+Final submission files are numbered from `4`. If that file already exists, the scripts automatically use the next available number, such as `（5）` or `（6）`. Set `SUBMISSION_NO=4` if you want to force a specific number. The script uses `--resume`, so interrupted runs can continue from the existing JSONL files.
 
 ## Download result
 
 Download this file back to your local machine:
 
 ```text
-outputs/submissions/submission_qwen2.5-7b-instruct.json
+outputs/submissions/submission_qwen2.5-7b-instruct（4）.json
 ```
 
 Then submit it on the competition platform after a final local schema check.

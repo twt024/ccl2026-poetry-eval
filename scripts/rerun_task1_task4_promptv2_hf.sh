@@ -11,6 +11,8 @@ TASK4_MAX_NEW_TOKENS="${TASK4_MAX_NEW_TOKENS:-256}"
 
 TASK2_FILE="${TASK2_FILE:-outputs/submissions/task2_${BASE_RUN_NAME}.json}"
 TASK3_FILE="${TASK3_FILE:-outputs/submissions/task3_${BASE_RUN_NAME}.json}"
+source scripts/submission_name.sh
+SUBMISSION_FILE="${SUBMISSION_FILE:-$(submission_output_path "${BASE_RUN_NAME}")}"
 
 python -m ccl_poetry_eval.infer \
   --task task1 \
@@ -51,8 +53,8 @@ python -m ccl_poetry_eval.submit \
   --task2 "${TASK2_FILE}" \
   --task3 "${TASK3_FILE}" \
   --task4 "outputs/submissions/task4_${PROMPT_RUN_NAME}.json" \
-  --output "outputs/submissions/submission_${PROMPT_RUN_NAME}.json"
+  --output "${SUBMISSION_FILE}"
 
 python -m ccl_poetry_eval.validate_submission \
-  --submission "outputs/submissions/submission_${PROMPT_RUN_NAME}.json" \
+  --submission "${SUBMISSION_FILE}" \
   --template auto

@@ -15,8 +15,10 @@ MODEL=/root/autodl-tmp/models/Qwen2.5-7B-Instruct bash scripts/run_task3_multipr
 Output:
 
 ```text
-outputs/submissions/submission_qwen2.5-7b-instruct_task3mp.json
+outputs/submissions/submission_qwen2.5-7b-instruct（4）.json
 ```
+
+If numbered submission files already exist, the script chooses the next available number.
 
 The script creates:
 
@@ -49,7 +51,7 @@ bash scripts/merge_task3_candidates.sh
 Output:
 
 ```text
-outputs/submissions/submission_qwen2.5-7b-instruct_task3-multimodel.json
+outputs/submissions/submission_qwen2.5-7b-instruct（next）.json
 ```
 
 ## Merge Rule
