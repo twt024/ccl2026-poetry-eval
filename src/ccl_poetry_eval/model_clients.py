@@ -103,6 +103,7 @@ class HFClient:
         self.torch = torch
         self.temperature = temperature
         self.max_new_tokens = max_new_tokens
+        self.enable_thinking = _optional_bool_env("HF_ENABLE_THINKING")
         self.tokenizer = AutoTokenizer.from_pretrained(model, trust_remote_code=True)
         self.model = AutoModelForCausalLM.from_pretrained(
             model,
@@ -131,12 +132,14 @@ class HFClient:
 
     def _format_chat(self, prompt: str) -> str:
         messages = [{"role": "user", "content": prompt}]
+        kwargs = {
+            "tokenize": False,
+            "add_generation_prompt": True,
+        }
+        if self.enable_thinking is not None:
+            kwargs["enable_thinking"] = self.enable_thinking
         try:
-            return self.tokenizer.apply_chat_template(
-                messages,
-                tokenize=False,
-                add_generation_prompt=True,
-            )
+            return self.tokenizer.apply_chat_template(messages, **kwargs)
         except Exception:
             return prompt
 
@@ -165,3 +168,10 @@ def build_client(
             max_new_tokens=max_new_tokens,
         )
     raise ValueError(f"Unsupported backend: {backend}")
+
+
+def _optional_bool_env(name: str) -> bool | None:
+    value = os.getenv(name)
+    if value is None or value == "":
+        return None
+    return value.lower() in {"1", "true", "yes", "y", "on"}

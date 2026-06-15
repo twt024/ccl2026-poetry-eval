@@ -92,7 +92,7 @@ def postprocess_record(
 def extract_json(text: Any) -> Any:
     if not isinstance(text, str):
         return None
-    cleaned = strip_code_fence(text.strip())
+    cleaned = strip_thinking_blocks(strip_code_fence(text.strip()))
     for candidate in json_candidates(cleaned):
         try:
             return json.loads(candidate)
@@ -106,6 +106,10 @@ def strip_code_fence(text: str) -> str:
         text = re.sub(r"^```(?:json)?\s*", "", text, flags=re.IGNORECASE)
         text = re.sub(r"\s*```$", "", text)
     return text.strip()
+
+
+def strip_thinking_blocks(text: str) -> str:
+    return re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL | re.IGNORECASE).strip()
 
 
 def json_candidates(text: str) -> list[str]:
